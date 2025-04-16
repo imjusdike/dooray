@@ -1,0 +1,25 @@
+name: 확도 알림 봇
+
+on:
+  schedule:
+    - cron: '5 9 * * *'  # 한국시간 18:05 = UTC 기준 09:05
+  workflow_dispatch:  # 수동 실행도 가능
+
+jobs:
+  send-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run alert script
+        run: python send_dooray_alert.py
